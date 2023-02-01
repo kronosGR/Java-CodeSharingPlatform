@@ -1,0 +1,20 @@
+#load_date {
+    color: blue;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+#code_snippet {
+    border: solid 2px black;
+    background-color: papayawhip;
+    padding: 15px;
+    margin: 0;
+    width: 500px;
+    text-align: left;
+}
+
+html{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}

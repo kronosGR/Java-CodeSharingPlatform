@@ -1,10 +1,18 @@
-<html>
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Code</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link th:href="@{/css/viewStyle.css}" rel="stylesheet">
 </head>
 <body>
-<pre>
-public static void main(String[] args) {    SpringApplication.run(CodeSharingPlatform.class, args);}
-</pre>
+<div>
+    <!--/*@thymesVar id="exDate" type="platform"*/-->
+    <span id="load_date" th:text="${exDate}">
+    </span>
+    <!--/*@thymesVar id="exCode" type="platform"*/-->
+    <pre id="code_snippet" th:text="${exCode}">
+    </pre>
+</div>
 </body>
 </html>

@@ -220,6 +220,109 @@ files:
         }
     }
   learner_created: false
+- name: src/resources/templates/template.html
+  visible: true
+  text: |-
+    <html>
+    <head>
+        <title>Code</title>
+    </head>
+    <body>
+    <pre>
+    public static void main(String[] args) {    SpringApplication.run(CodeSharingPlatform.class, args);}
+    </pre>
+    </body>
+    </html>
+  learner_created: true
+- name: src/platform/Controllers/ApiController.java
+  visible: true
+  text: |
+    package platform.Controllers;
+
+    import org.springframework.http.HttpStatus;
+    import org.springframework.http.ResponseEntity;
+    import org.springframework.web.bind.annotation.GetMapping;
+    import org.springframework.web.bind.annotation.RequestMapping;
+    import org.springframework.web.bind.annotation.ResponseBody;
+    import org.springframework.web.bind.annotation.RestController;
+
+    import java.util.Map;
+
+    @RestController
+    @RequestMapping("/api")
+    public class ApiController {
+
+        @GetMapping(path = "/code")
+        @ResponseBody
+        public ResponseEntity<?> getCode() {
+            return ResponseEntity.ok().header("Content-Type", "application/json")
+                    .body(Map.of("code","public static void main(String[] args) {    SpringApplication.run(CodeSharingPlatform.class, args);}"));
+        }
+    }
+  learner_created: true
+- name: build.gradle
+  visible: true
+  text: |-
+    plugins {
+        id 'org.springframework.boot' version '3.0.2'
+        id 'java'
+    }
+
+    apply plugin: 'io.spring.dependency-management'
+
+
+    repositories {
+        mavenCentral()
+    }
+
+    sourceSets.main.resources.srcDirs = ["src/resources"]
+
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter'
+        implementation 'org.springframework.boot:spring-boot-starter-actuator'
+        implementation("org.springframework.boot:spring-boot-starter-web")
+        implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+        developmentOnly("org.springframework.boot:spring-boot-devtools")
+    }
+  learner_created: true
+- name: src/platform/Controllers/WebController.java
+  visible: true
+  text: |
+    package platform.Controllers;
+
+    import org.springframework.stereotype.Controller;
+    import org.springframework.web.bind.annotation.GetMapping;
+
+    @Controller
+    public class WebController {
+
+        @GetMapping(path = "/code")
+        public String getCode(){
+            return "template";
+        }
+    }
+  learner_created: true
+- name: src/platform/Models/Code.java
+  visible: true
+  learner_created: true
+- name: src/platform/Services/Service.java
+  visible: true
+  learner_created: true
+- name: src/resources/templates/templateNew.html
+  visible: true
+  learner_created: true
+- name: src/resources/static/js/css/newStyle.css
+  visible: true
+  learner_created: true
+- name: src/resources/static/js/newJS.js
+  visible: true
+  learner_created: true
+- name: src/resources/static/css/viewStyle.css
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/learn/step/11028#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Wed, 01 Feb 2023 19:13:08 UTC"
 record: -1

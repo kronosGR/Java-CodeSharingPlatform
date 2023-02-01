@@ -1,11 +1,11 @@
 package platform.Controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import platform.Models.Code;
+import platform.Services.Service;
 
 import java.util.Map;
 
@@ -13,10 +13,20 @@ import java.util.Map;
 @RequestMapping("/api")
 public class ApiController {
 
+    @Autowired
+    Service service;
+
     @GetMapping(path = "/code")
     @ResponseBody
-    public ResponseEntity<?> getCode() {
+    public ResponseEntity<Code> getCode() {
         return ResponseEntity.ok().header("Content-Type", "application/json")
-                .body(Map.of("code","public static void main(String[] args) {    SpringApplication.run(CodeSharingPlatform.class, args);}"));
+                .body(service.getCode());
+    }
+
+    @PostMapping(path  ="/code/new")
+    @ResponseBody
+    public ResponseEntity<String> updateCode(@RequestBody Code code){
+        service.updateCode(code);
+        return ResponseEntity.ok().body("{}");
     }
 }
