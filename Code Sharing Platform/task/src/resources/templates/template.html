@@ -7,11 +7,11 @@
 </head>
 <body>
 <div>
-    <!--/*@thymesVar id="exDate" type="platform"*/-->
-    <span id="load_date" th:text="${exDate}">
+    <!--/*@thymesVar id="code" type="platform.Models.Code"*/-->
+    <span id="load_date" th:text="${code.getDate()}">
     </span>
     <!--/*@thymesVar id="exCode" type="platform"*/-->
-    <pre id="code_snippet" th:text="${exCode}">
+    <pre id="code_snippet" th:text="${code.getCode()}">
     </pre>
 </div>
 </body>

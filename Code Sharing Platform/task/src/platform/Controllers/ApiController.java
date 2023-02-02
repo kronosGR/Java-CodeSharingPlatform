@@ -28,7 +28,7 @@ public class ApiController {
     @ResponseBody
     public ResponseEntity<String> putCode(@RequestBody Code code) {
         return ResponseEntity.ok().header("Content-Type", "application/json")
-                .body(Map.of("id", service.putCode(code)).toString());
+                .body(Map.of("id", "\""+service.putCode(code).toString()+"\"").toString());
     }
 
     @GetMapping(path = "/code/latest")

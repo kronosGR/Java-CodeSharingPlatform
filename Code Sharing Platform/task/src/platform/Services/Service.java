@@ -31,13 +31,13 @@ public class Service {
         return db.get(id - 1);
     }
 
-    public int putCode(Code code) {
+    public String putCode(Code code) {
         int id = lastID++;
         db.add(new Code(id,
                 code.getCode(),
                 LocalDateTime.now().format(DateTimeFormatter.ofPattern(DATE_PATTERN))
         ));
-        return id;
+        return String.valueOf(id);
     }
 
     public List<Code> getLatestCode() {
@@ -47,7 +47,7 @@ public class Service {
         if (db.size() == 0) return null;
 
         for (int idx = startFrom; idx < db.size(); idx++) {
-            tmp.add(0, db.get(1));
+            tmp.add(0, db.get(idx));
         }
         return tmp;
     }
