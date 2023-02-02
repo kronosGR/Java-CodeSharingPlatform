@@ -389,6 +389,248 @@ files:
         }
     }
   learner_created: false
+- name: src/platform/Models/Code.java
+  visible: true
+  text: |
+    package platform.Models;
+
+    import java.time.LocalDateTime;
+
+
+    public class Code {
+        String code;
+        String date;
+
+
+        public Code() {
+        }
+
+        public Code(String code, String date) {
+            this.code = code;
+            this.date = date;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            this.code = code;
+        }
+
+        public String getDate() {
+            return date;
+        }
+
+        public void setDate(String date) {
+            this.date = date;
+        }
+    }
+  learner_created: true
+- name: src/resources/templates/template.html
+  visible: true
+  text: |-
+    <!DOCTYPE HTML>
+    <html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Code</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link th:href="@{/css/viewStyle.css}" rel="stylesheet">
+    </head>
+    <body>
+    <div>
+        <!--/*@thymesVar id="exDate" type="platform"*/-->
+        <span id="load_date" th:text="${exDate}">
+        </span>
+        <!--/*@thymesVar id="exCode" type="platform"*/-->
+        <pre id="code_snippet" th:text="${exCode}">
+        </pre>
+    </div>
+    </body>
+    </html>
+  learner_created: true
+- name: src/platform/Controllers/ApiController.java
+  visible: true
+  text: |
+    package platform.Controllers;
+
+    import org.springframework.beans.factory.annotation.Autowired;
+    import org.springframework.http.HttpStatus;
+    import org.springframework.http.ResponseEntity;
+    import org.springframework.web.bind.annotation.*;
+    import platform.Models.Code;
+    import platform.Services.Service;
+
+    import java.util.Map;
+
+    @RestController
+    @RequestMapping("/api")
+    public class ApiController {
+
+        @Autowired
+        Service service;
+
+        @GetMapping(path = "/code")
+        @ResponseBody
+        public ResponseEntity<Code> getCode() {
+            return ResponseEntity.ok().header("Content-Type", "application/json")
+                    .body(service.getCode());
+        }
+
+        @PostMapping(path  ="/code/new")
+        @ResponseBody
+        public ResponseEntity<String> updateCode(@RequestBody Code code){
+            service.updateCode(code);
+            return ResponseEntity.ok().body("{}");
+        }
+    }
+  learner_created: true
+- name: src/platform/Services/Service.java
+  visible: true
+  text: |
+    package platform.Services;
+
+    import platform.Models.Code;
+
+    import java.time.LocalDateTime;
+    import java.time.format.DateTimeFormatter;
+
+    @org.springframework.stereotype.Service
+    public class Service {
+
+        public static String DATE_PATTERN="yyyy/MM/dd HH:mm:ss";
+        Code code = new Code("public static void main(String[] args) {\n" +
+                "    SpringApplication.run(CodeSharingPlatform.class, args);\n" +
+                "}"
+                , LocalDateTime.now().format(DateTimeFormatter.ofPattern(DATE_PATTERN)));
+
+        public Code getCode(){
+            Code tmp = new Code(code.getCode(), code.getDate());
+            return tmp;
+        }
+
+        public void updateCode(Code c){
+            code = new Code(c.getCode(), LocalDateTime.now().format(DateTimeFormatter.ofPattern(DATE_PATTERN)));
+        }
+    }
+  learner_created: true
+- name: src/resources/templates/templateNew.html
+  visible: true
+  text: |-
+    <!DOCTYPE HTML>
+    <html xmlns:th="http://www.thymeleaf.org">
+    <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+      <title>Create</title>
+      <link type="text/css" th:href="@{/css/newStyle.css}" rel="stylesheet">
+      <script type="text/javascript" th:src="@{/js/newJS.js}"></script>
+    </head>
+    <body>
+    <div>
+      <textarea id="code_snippet" placeholder="// write your code here"></textarea>
+      <button id="send_snippet" type="submit" th:onclick="send()">Submit</button>
+    </div>
+    </body>
+    </html>
+  learner_created: true
+- name: build.gradle
+  visible: true
+  text: |-
+    plugins {
+        id 'org.springframework.boot' version '3.0.2'
+        id 'java'
+    }
+
+    apply plugin: 'io.spring.dependency-management'
+
+
+    repositories {
+        mavenCentral()
+    }
+
+    sourceSets.main.resources.srcDirs = ["src/resources"]
+
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter'
+        implementation 'org.springframework.boot:spring-boot-starter-actuator'
+        implementation("org.springframework.boot:spring-boot-starter-web")
+        implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+        developmentOnly("org.springframework.boot:spring-boot-devtools")
+    }
+  learner_created: true
+- name: src/resources/static/css/viewStyle.css
+  visible: true
+  text: |-
+    #load_date {
+        color: blue;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+
+    #code_snippet {
+        border: solid 2px black;
+        background-color: papayawhip;
+        padding: 15px;
+        margin: 0;
+        width: 500px;
+        text-align: left;
+    }
+
+    html{
+        display: flex;
+        justify-content: center;
+        text-align: center;
+    }
+  learner_created: true
+- name: src/resources/static/js/newJS.js
+  visible: true
+  text: |-
+    function send() {
+        let object = {
+            "code": document.getElementById("code_snippet").value
+        };
+
+        let json = JSON.stringify(object);
+
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", '/api/code/new', false)
+        xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+        xhr.send(json);
+
+        if (xhr.status == 200) {
+            alert("Success!");
+        }
+    }
+  learner_created: true
+- name: src/platform/Controllers/WebController.java
+  visible: true
+  text: |
+    package platform.Controllers;
+
+    import org.springframework.beans.factory.annotation.Autowired;
+    import org.springframework.stereotype.Controller;
+    import org.springframework.ui.Model;
+    import org.springframework.web.bind.annotation.GetMapping;
+    import platform.Services.Service;
+
+    @Controller
+    public class WebController {
+
+        @Autowired
+        Service service;
+        @GetMapping(path = "/code")
+        public String getCode(Model model){
+            model.addAttribute("exCode", service.getCode().getCode())
+                    .addAttribute("exDate", service.getCode().getDate());
+            return "template";
+        }
+
+        @GetMapping(path="/code/new")
+        public String getNew(){
+            return "templateNew";
+        }
+    }
+  learner_created: true
 feedback_link: https://hyperskill.org/learn/step/11029#comment
 status: Unchecked
 record: -1

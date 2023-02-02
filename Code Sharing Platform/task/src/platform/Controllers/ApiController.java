@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import platform.Models.Code;
 import platform.Services.Service;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -16,17 +17,24 @@ public class ApiController {
     @Autowired
     Service service;
 
-    @GetMapping(path = "/code")
+    @GetMapping(path = "/code/{id}")
     @ResponseBody
-    public ResponseEntity<Code> getCode() {
+    public ResponseEntity<Code> getCodeById(@PathVariable int id) {
         return ResponseEntity.ok().header("Content-Type", "application/json")
-                .body(service.getCode());
+                .body(service.getCodeById(id));
     }
 
-    @PostMapping(path  ="/code/new")
+    @PostMapping(path = "/code/new")
     @ResponseBody
-    public ResponseEntity<String> updateCode(@RequestBody Code code){
-        service.updateCode(code);
-        return ResponseEntity.ok().body("{}");
+    public ResponseEntity<String> putCode(@RequestBody Code code) {
+        return ResponseEntity.ok().header("Content-Type", "application/json")
+                .body(Map.of("id", service.putCode(code)).toString());
+    }
+
+    @GetMapping(path = "/code/latest")
+    @ResponseBody
+    public ResponseEntity<List<Code>> getLatest() {
+        return ResponseEntity.ok().header("Content-Type", "application/json")
+                .body(service.getLatestCode());
     }
 }

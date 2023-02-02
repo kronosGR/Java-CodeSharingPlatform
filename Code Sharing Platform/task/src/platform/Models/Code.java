@@ -1,9 +1,14 @@
 package platform.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.time.LocalDateTime;
 
 
 public class Code {
+
+    @JsonIgnore
+    int id;
     String code;
     String date;
 
@@ -11,9 +16,10 @@ public class Code {
     public Code() {
     }
 
-    public Code(String code, String date) {
+    public Code(int id, String code, String date) {
         this.code = code;
         this.date = date;
+        this.id = id;
     }
 
     public String getCode() {
@@ -30,5 +36,13 @@ public class Code {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
