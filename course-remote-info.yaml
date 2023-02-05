@@ -3,7 +3,7 @@ hyperskill_project:
   ide_files: https://stepik.org/media/attachments/lesson/405256/additional_files.json
   is_template_based: false
   use_ide: true
-update_date: "Thu, 02 Feb 2023 09:04:45 UTC"
+update_date: "Sun, 05 Feb 2023 07:24:57 UTC"
 stages:
 - id: 692
   step: 11027
@@ -16,7 +16,7 @@ stages:
   is_completed: true
 - id: 695
   step: 11030
-  is_completed: false
+  is_completed: true
 - id: 696
   step: 11031
   is_completed: false
@@ -54,6 +54,22 @@ topics:
     theory_id: 6740
   - title: Basic project structure
     theory_id: 6339
+  - title: IoC Container
+    theory_id: 16851
+  - title: Spring beans
+    theory_id: 14641
+  - title: Spring components
+    theory_id: 14652
+  - title: '@Bean vs @Component'
+    theory_id: 14771
+  - title: ApplicationContext
+    theory_id: 22062
+  - title: Scopes of beans
+    theory_id: 19487
+  - title: Bean lifecycle
+    theory_id: 19550
+  - title: The concept of patterns
+    theory_id: 3611
   - title: HTTP messages
     theory_id: 6752
   - title: Introduction to Spring Web MVC
@@ -62,8 +78,20 @@ topics:
     theory_id: 7834
   - title: Postman
     theory_id: 8512
+  - title: Introduction to Spring Data
+    theory_id: 16299
+  - title: CRUD repositories
+    theory_id: 18031
   - title: Getting data from REST
     theory_id: 13287
+  - title: Posting and deleting data via REST
+    theory_id: 13292
+  - title: Handling requests with bodies
+    theory_id: 13334
+  - title: Application layers
+    theory_id: 13971
+  - title: Data Transfer Object in Spring
+    theory_id: 25613
   - title: Computer programming
     theory_id: 8739
   - title: Paradigms
@@ -182,22 +210,44 @@ topics:
     theory_id: 6701
   - title: HTML basics
     theory_id: 6434
+  - title: What is a bug
+    theory_id: 5504
+  - title: Functional testing
+    theory_id: 13438
+  - title: Unit testing
+    theory_id: 7545
+  - title: Dependency injection
+    theory_id: 20580
   - title: Tags and Attributes
     theory_id: 7536
   - title: HTML page structure
     theory_id: 6491
+  - title: Introduction to databases
+    theory_id: 8497
+  - title: Interfaces
+    theory_id: 9640
   - title: YAML
     theory_id: 12722
   - title: IntelliJ IDEA
     theory_id: 3801
   - title: IntelliJ IDEA basics
     theory_id: 5819
+  - title: XML
+    theory_id: 6901
   - title: Introduction to software architecture
     theory_id: 15368
   - title: JSON
     theory_id: 6854
+  - title: Data and object mapping
+    theory_id: 8262
+  - title: Reducing boilerplate code with Lombok
+    theory_id: 13983
+  - title: Design principles
+    theory_id: 8956
   - title: Jackson
     theory_id: 21027
+  - title: Coupling and cohesion
+    theory_id: 21478
   - title: Introduction to generic programming
     theory_id: 3492
   - title: Generics and Object
@@ -246,6 +296,10 @@ topics:
     theory_id: 3587
   - title: Interface
     theory_id: 3615
+  - title: toString()
+    theory_id: 3584
+  - title: Records
+    theory_id: 18329
   - title: Boxing and unboxing
     theory_id: 3595
   1:
@@ -269,10 +323,6 @@ topics:
     theory_id: 7527
   - title: Intro to HTML forms
     theory_id: 6560
-  - title: Posting and deleting data via REST
-    theory_id: 13292
-  - title: Handling requests with bodies
-    theory_id: 13334
   - title: Hierarchy of exceptions
     theory_id: 3570
   - title: Exception handling
@@ -291,8 +341,6 @@ topics:
     theory_id: 8372
   - title: Functions
     theory_id: 8388
-  - title: What is a bug
-    theory_id: 5504
   - title: Comments
     theory_id: 7502
   - title: "Synchronous, asynchronous, parallel"
@@ -348,67 +396,31 @@ topics:
     theory_id: 10671
   - title: Absolute units
     theory_id: 10605
-  - title: IoC Container
-    theory_id: 16851
-  - title: Spring beans
-    theory_id: 14641
-  - title: Spring components
-    theory_id: 14652
   - title: Using Spring MVC
     theory_id: 14409
   - title: Using FreeMarker with Spring Boot
     theory_id: 13634
-  - title: Functional testing
-    theory_id: 13438
-  - title: Unit testing
-    theory_id: 7545
-  - title: Dependency injection
-    theory_id: 20580
   - title: Margin and Padding
     theory_id: 8346
   - title: Width and Height
     theory_id: 8325
-  - title: Interfaces
-    theory_id: 9640
   3:
-  - title: '@Bean vs @Component'
-    theory_id: 14771
-  - title: ApplicationContext
-    theory_id: 22062
-  - title: Scopes of beans
-    theory_id: 19487
-  - title: Bean lifecycle
-    theory_id: 19550
   - title: H2 database
     theory_id: 8762
-  - title: The concept of patterns
-    theory_id: 3611
-  - title: Introduction to Spring Data
-    theory_id: 16299
-  - title: CRUD repositories
-    theory_id: 18031
   - title: Introduction to JPA
     theory_id: 17125
   - title: Entities
     theory_id: 18135
   - title: JPA relationships
     theory_id: 17787
-  - title: Application layers
-    theory_id: 13971
   - title: Relational databases with Spring Data
     theory_id: 18086
-  - title: Introduction to databases
-    theory_id: 8497
   - title: Relational Data Model
     theory_id: 13785
   - title: What is SQL
     theory_id: 7054
   - title: Intro to MySQL
     theory_id: 16662
-  - title: XML
-    theory_id: 6901
-  - title: Data and object mapping
-    theory_id: 8262
   - title: Object-Relational Mapping (ORM)
     theory_id: 8312
   - title: Introduction to PostgreSQL

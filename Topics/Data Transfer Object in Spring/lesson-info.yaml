@@ -1,0 +1,7 @@
+content:
+- Theory
+- The purposes of ModelMapper
+- Converting a DTO to a Java class implementation
+- DTO definition
+- Application
+- DTO implementation with a Java record

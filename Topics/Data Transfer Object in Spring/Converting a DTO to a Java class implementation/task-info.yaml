@@ -1,0 +1,19 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: "class Solution {    \n    Product convertProductDTOToProduct(ProductDTO dto)\
+    \ {\n        //your code\n    }\n}"
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/25623#comment
+status: Failed
+feedback:
+  message: |
+    Compilation error
+    Main.java:104: error: incompatible types: String cannot be converted to LocalDate
+            Product prod = new Product(dto.getId(), dto.getModel(), dto.getPrice(), "", "SuperVendor");
+                                                                                    ^
+    Note: Some messages have been simplified; recompile with -Xdiags:verbose to get full output
+    1 error
+  time: "Sat, 04 Feb 2023 06:47:11 UTC"
+record: -1

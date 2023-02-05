@@ -1,0 +1,27 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.util.Scanner;
+
+    record Person(String name, int age, String gender) {
+      //don't change this record
+    }
+
+    public class Main {
+        public static void main(String[] args) {
+            Scanner scanner = new Scanner(System.in);
+            Person person = new Person(scanner.next(), scanner.nextInt(), scanner.next());
+
+            // your code goes here
+
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/18334#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: "Fri, 03 Feb 2023 06:02:16 UTC"
+record: -1

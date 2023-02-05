@@ -14,7 +14,7 @@ public class WebController {
     Service service;
 
     @GetMapping(path = "/code/{id}")
-    public String getCodeById(Model model, @PathVariable int id){
+    public String getCodeById(Model model, @PathVariable long id){
         model.addAttribute("code", service.getCodeById(id));
         return "template";
     }

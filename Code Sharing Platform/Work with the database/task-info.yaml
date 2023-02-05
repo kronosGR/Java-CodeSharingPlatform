@@ -443,6 +443,347 @@ files:
         }
     }
   learner_created: false
+- name: src/platform/Models/Code.java
+  visible: true
+  text: |
+    package platform.Models;
+
+    import com.fasterxml.jackson.annotation.JsonIgnore;
+
+    import java.time.LocalDateTime;
+
+
+    public class Code {
+
+        @JsonIgnore
+        int id;
+        String code;
+        String date;
+
+
+        public Code() {
+        }
+
+        public Code(int id, String code, String date) {
+            this.code = code;
+            this.date = date;
+            this.id = id;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            this.code = code;
+        }
+
+        public String getDate() {
+            return date;
+        }
+
+        public void setDate(String date) {
+            this.date = date;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+    }
+  learner_created: true
+- name: src/resources/templates/template.html
+  visible: true
+  text: |-
+    <!DOCTYPE HTML>
+    <html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Code</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link th:href="@{/css/viewStyle.css}" rel="stylesheet">
+    </head>
+    <body>
+    <div>
+        <!--/*@thymesVar id="code" type="platform.Models.Code"*/-->
+        <span id="load_date" th:text="${code.getDate()}">
+        </span>
+        <!--/*@thymesVar id="exCode" type="platform"*/-->
+        <pre id="code_snippet" th:text="${code.getCode()}">
+        </pre>
+    </div>
+    </body>
+    </html>
+  learner_created: true
+- name: src/resources/templates/templateLatest.html
+  visible: true
+  text: |-
+    <!DOCTYPE HTML>
+    <html xmlns:th="http://www.thymeleaf.org">
+    <head>
+      <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+      <title>Latest</title>
+      <link rel="stylesheet" th:href="@{/css/viewStyle.css}">
+    </head>
+    <body>
+    <div>
+      <table>
+        <!--/*@thymesVar id="latest" type="java.util.List<platform.model.entity.Code>"*/-->
+        <tr th:if="${latest.isEmpty()}">
+          <td colspan="2">No code snippets uploaded</td>
+        </tr>
+        <tr th:each="code : ${latest}">
+          <!--/*@thymesVar id="code" type="platform.model.entity.Code"*/-->
+          <span id="load_date" th:text="${code.getDate()}">
+                </span>
+          <pre id="code_snippet" th:text="${code.getCode()}">
+                </pre>
+        </tr>
+      </table>
+    </div>
+    </body>
+    </html>
+  learner_created: true
+- name: src/platform/Controllers/ApiController.java
+  visible: true
+  text: |
+    package platform.Controllers;
+
+    import org.springframework.beans.factory.annotation.Autowired;
+    import org.springframework.http.HttpStatus;
+    import org.springframework.http.ResponseEntity;
+    import org.springframework.web.bind.annotation.*;
+    import platform.Models.Code;
+    import platform.Services.Service;
+
+    import java.util.List;
+    import java.util.Map;
+
+    @RestController
+    @RequestMapping("/api")
+    public class ApiController {
+
+        @Autowired
+        Service service;
+
+        @GetMapping(path = "/code/{id}")
+        @ResponseBody
+        public ResponseEntity<Code> getCodeById(@PathVariable int id) {
+            return ResponseEntity.ok().header("Content-Type", "application/json")
+                    .body(service.getCodeById(id));
+        }
+
+        @PostMapping(path = "/code/new")
+        @ResponseBody
+        public ResponseEntity<String> putCode(@RequestBody Code code) {
+            return ResponseEntity.ok().header("Content-Type", "application/json")
+                    .body(Map.of("id", "\""+service.putCode(code).toString()+"\"").toString());
+        }
+
+        @GetMapping(path = "/code/latest")
+        @ResponseBody
+        public ResponseEntity<List<Code>> getLatest() {
+            return ResponseEntity.ok().header("Content-Type", "application/json")
+                    .body(service.getLatestCode());
+        }
+    }
+  learner_created: true
+- name: src/platform/Services/Service.java
+  visible: true
+  text: |
+    package platform.Services;
+
+    import platform.Models.Code;
+
+    import java.time.LocalDateTime;
+    import java.time.format.DateTimeFormatter;
+    import java.util.ArrayList;
+    import java.util.List;
+
+    @org.springframework.stereotype.Service
+    public class Service {
+
+        List<Code> db = new ArrayList<>();
+        public static String DATE_PATTERN = "yyyy/MM/dd HH:mm:ss";
+        int lastID = 1;
+    //    Code code = new Code("public static void main(String[] args) {\n" +
+    //            "    SpringApplication.run(CodeSharingPlatform.class, args);\n" +
+    //            "}"
+    //            , LocalDateTime.now().format(DateTimeFormatter.ofPattern(DATE_PATTERN)));
+
+    //    public Code getCode() {
+    //        Code tmp = new Code(code.getCode(), code.getDate());
+    //        return tmp;
+    //    }
+
+    //    public void updateCode(Code c) {
+    //        code = new Code(c.getCode(), LocalDateTime.now().format(DateTimeFormatter.ofPattern(DATE_PATTERN)));
+    //    }
+
+        public Code getCodeById(int id) {
+            return db.get(id - 1);
+        }
+
+        public String putCode(Code code) {
+            int id = lastID++;
+            db.add(new Code(id,
+                    code.getCode(),
+                    LocalDateTime.now().format(DateTimeFormatter.ofPattern(DATE_PATTERN))
+            ));
+            return String.valueOf(id);
+        }
+
+        public List<Code> getLatestCode() {
+            List<Code> tmp = new ArrayList<>();
+            int startFrom = db.size() < 10 ? 0 : db.size() - 10;
+
+            if (db.size() == 0) return null;
+
+            for (int idx = startFrom; idx < db.size(); idx++) {
+                tmp.add(0, db.get(idx));
+            }
+            return tmp;
+        }
+    }
+  learner_created: true
+- name: src/resources/templates/templateNew.html
+  visible: true
+  text: |-
+    <!DOCTYPE HTML>
+    <html xmlns:th="http://www.thymeleaf.org">
+    <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+      <title>Create</title>
+      <link type="text/css" th:href="@{/css/newStyle.css}" rel="stylesheet">
+      <script type="text/javascript" th:src="@{/js/newJS.js}"></script>
+    </head>
+    <body>
+    <div>
+      <textarea id="code_snippet" placeholder="// write your code here"></textarea>
+      <button id="send_snippet" type="submit" th:onclick="send()">Submit</button>
+    </div>
+    </body>
+    </html>
+  learner_created: true
+- name: build.gradle
+  visible: true
+  text: |-
+    plugins {
+        id 'org.springframework.boot' version '3.0.2'
+        id 'java'
+    }
+
+    apply plugin: 'io.spring.dependency-management'
+
+
+    repositories {
+        mavenCentral()
+    }
+
+    sourceSets.main.resources.srcDirs = ["src/resources"]
+
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter'
+        implementation 'org.springframework.boot:spring-boot-starter-actuator'
+        implementation("org.springframework.boot:spring-boot-starter-web")
+        implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+        developmentOnly("org.springframework.boot:spring-boot-devtools")
+
+        compileOnly 'org.projectlombok:lombok:1.18.20'
+        annotationProcessor 'org.projectlombok:lombok:1.18.20'
+
+        testCompileOnly 'org.projectlombok:lombok:1.18.20'
+        testAnnotationProcessor 'org.projectlombok:lombok:1.18.20'
+    }
+  learner_created: true
+- name: src/resources/static/css/viewStyle.css
+  visible: true
+  text: |-
+    #load_date {
+        color: blue;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+
+    #code_snippet {
+        border: solid 2px black;
+        background-color: papayawhip;
+        padding: 15px;
+        margin: 0;
+        width: 500px;
+        text-align: left;
+    }
+
+    html{
+        display: flex;
+        justify-content: center;
+        text-align: center;
+    }
+  learner_created: true
+- name: src/resources/static/js/newJS.js
+  visible: true
+  text: |-
+    function send() {
+        let object = {
+            "code": document.getElementById("code_snippet").value
+        };
+
+        let json = JSON.stringify(object);
+
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", '/api/code/new', false)
+        xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+        xhr.send(json);
+
+        if (xhr.status == 200) {
+            alert("Success!");
+        }
+    }
+  learner_created: true
+- name: src/platform/Controllers/WebController.java
+  visible: true
+  text: |
+    package platform.Controllers;
+
+    import org.springframework.beans.factory.annotation.Autowired;
+    import org.springframework.stereotype.Controller;
+    import org.springframework.ui.Model;
+    import org.springframework.web.bind.annotation.GetMapping;
+    import org.springframework.web.bind.annotation.PathVariable;
+    import platform.Services.Service;
+
+    @Controller
+    public class WebController {
+
+        @Autowired
+        Service service;
+
+        @GetMapping(path = "/code/{id}")
+        public String getCodeById(Model model, @PathVariable int id){
+            model.addAttribute("code", service.getCodeById(id));
+            return "template";
+        }
+
+        @GetMapping(path="/code/new")
+        public String getNew(){
+            return "templateNew";
+        }
+
+        @GetMapping(path="/code/latest")
+        public String getLatest(Model model){
+            model.addAttribute("latest", service.getLatestCode());
+            return "templateLatest";
+        }
+    }
+  learner_created: true
+- name: src/platform/Services/ServiceRepository.java
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/learn/step/11030#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Sun, 05 Feb 2023 18:52:59 UTC"
 record: -1

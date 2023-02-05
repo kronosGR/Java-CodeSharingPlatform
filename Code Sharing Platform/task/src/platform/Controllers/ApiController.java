@@ -19,7 +19,7 @@ public class ApiController {
 
     @GetMapping(path = "/code/{id}")
     @ResponseBody
-    public ResponseEntity<Code> getCodeById(@PathVariable int id) {
+    public ResponseEntity<Code> getCodeById(@PathVariable Long id) {
         return ResponseEntity.ok().header("Content-Type", "application/json")
                 .body(service.getCodeById(id));
     }
