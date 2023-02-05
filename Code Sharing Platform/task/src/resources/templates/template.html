@@ -14,7 +14,15 @@
     <!--/*@thymesVar id="code" type="platform.Models.Code"*/-->
     <span id="load_date" th:text="${code.getDate()}">
     </span>
-    <!--/*@thymesVar id="exCode" type="platform"*/-->
+    <div class="restriction" th:if="${code.limited}">
+        <span id="views_restriction" th:text="${code.views}"></span>
+        <span> more views allowed</span>
+    </div>
+    <div class="restriction" th:if="${code.time > 0}">
+        <span>The code will be available for </span>
+        <span id="time_restriction" th:text="${code.time}"></span>
+        <span> seconds</span>
+    </div>
     <pre id="code_snippet">
         <code th:text="${code.getCode()}" style="background: none;">
         </code>

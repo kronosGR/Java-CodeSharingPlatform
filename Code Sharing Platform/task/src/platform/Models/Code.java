@@ -18,14 +18,19 @@ public class Code {
 
     @JsonIgnore
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
+
+    String id;
     String code;
 
     String date;
 
     @JsonIgnore
     LocalDateTime localDateTime;
+    long time;
+    long views;
+    @Transient
+    @JsonIgnore
+    boolean limited;
 
 
 
